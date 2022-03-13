@@ -8,6 +8,7 @@ then
 	shift 1
 fi
 
+# shellcheck source=/dev/null
 [ -e "/bin/svc.d/default/$SERVICE" ] && . "/bin/svc.d/default/$SERVICE"
 
 BIN=""
@@ -21,14 +22,14 @@ do
 done
 [ -z "$BIN" ] && exit 1
 
-PID=$(pidof -o %PPID $BIN)
+PID=$(pidof -o %PPID "$BIN")
 
 case $1 in
 	-s)
-		[ -z "$PID" ] && $BIN $PARAMS;
+		[ -z "$PID" ] && $BIN "$PARAMS";
 		;;
 	-k)
-		[ -n "$PID" ] && kill -9 $PID &> /dev/null;
+		[ -n "$PID" ] && kill -9 "$PID" > /dev/null 2>&1 ;
 		;;
 	*)
 		echo "usage: $0 -s|-k"
