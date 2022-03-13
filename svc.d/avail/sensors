@@ -1,12 +1,13 @@
 #!/bin/sh
 
+# shellcheck source=/dev/null
 . /bin/svc.d/default/sensors
 
 case $1 in
 	-s)
 		for m in $HWMON_MODULES;
 		do
-			modprobe $m
+			modprobe "$m"
 		done
 		;;
 	-k)
