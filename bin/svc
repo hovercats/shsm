@@ -4,10 +4,10 @@
 #
 
 BASEDIR="/bin/svc.d"
-BASENAME="$(basename $0)"
+BASENAME="$(basename "$0")"
 
 [ -d "$BASEDIR" ] || mkdir -p "$BASEDIR"
-cd $BASEDIR
+cd $BASEDIR || exit 1
 
 usage() {
 	printf "usage: %s [-acdklrs] [service]\n" "$BASENAME" >&2
@@ -24,11 +24,11 @@ runservice() {
 	dir="$2"
 	cmd="$3"
 
-	if [ $(stat -L -t "$dir/$service" | cut -d' ' -f 2) -eq 0 ];
+	if [ "$(stat -L -t "$dir/$service" | cut -d' ' -f 2)" -eq 0 ];
 	then
-		"./bare.sh" "$service" "$cmd" 2>&1 >/dev/null &
+		"./bare.sh" "$service" "$cmd" > /dev/null 2>&1 &
 	else
-		"$dir/$service" "$cmd" 2>&1 >/dev/null &
+		"$dir/$service" "$cmd" > /dev/null 2>&1 &
 	fi
 }
 
@@ -67,7 +67,7 @@ case "$1" in
 			printf "%s: '%s' activated.\n" \
 				"$BASENAME" "$2"
 		else
-			cd run
+			cd run || exit 1
 			ls .
 		fi 
 		;;	
@@ -93,8 +93,7 @@ case "$1" in
 		doservice "$1" "$2"
 		;;
 	-l)
-		cd avail
-		ls .
+		ls "$BASEDIR"/avail
 		;;
 	-r)
 		if [ $# -gt 1 ];
