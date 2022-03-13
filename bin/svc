@@ -1,0 +1,115 @@
+#!/bin/sh
+#
+# See LICENSE file for license details.
+#
+
+BASEDIR="/bin/svc.d"
+BASENAME="$(basename $0)"
+
+[ -d "$BASEDIR" ] || mkdir -p "$BASEDIR"
+cd $BASEDIR
+
+usage() {
+	printf "usage: %s [-acdklrs] [service]\n" "$BASENAME" >&2
+	exit 1
+}
+
+if [ $# -lt 1 ];
+then
+	usage
+fi
+
+runservice() {
+	service="$1"
+	dir="$2"
+	cmd="$3"
+
+	if [ $(stat -L -t "$dir/$service" | cut -d' ' -f 2) -eq 0 ];
+	then
+		"./bare.sh" "$service" "$cmd" 2>&1 >/dev/null &
+	else
+		"$dir/$service" "$cmd" 2>&1 >/dev/null &
+	fi
+}
+
+doservice() {
+	cmd="$1"
+	service="$2"
+
+	if [ -z "${service}" ];
+	then
+		services=$(ls -1 run)
+		for s in ${services};
+		do
+			runservice "$s" run "$cmd"
+			printf "%s: '%s' %s.\n" \
+				"$BASENAME" "$s" "$cmd"
+		done
+	else
+		if [ -x "avail/$service" ];
+		then	
+			runservice "$service" avail "$cmd"
+			printf "%s: '%s' %s.\n" \
+				"$BASENAME" "$service" "$cmd"
+		else
+			printf "%s: '%s' is not available or executable.\n" \
+				"$BASENAME" "$service" >&2
+			exit 1
+		fi
+	fi
+}
+
+case "$1" in
+	-a)
+		if [ $# -gt 1 ] && [ -e "avail/$2" ];
+		then
+			ln -sf "../avail/$2" "run/$2"
+			printf "%s: '%s' activated.\n" \
+				"$BASENAME" "$2"
+		else
+			cd run
+			ls .
+		fi 
+		;;	
+	-c)
+		[ -d "$BASEDIR" ] || mkdir -p "$BASEDIR"
+		[ -d "$BASEDIR/avail" ] || mkdir -p "$BASEDIR/avail"
+		[ -d "$BASEDIR/default" ] || mkdir -p "$BASEDIR/default"
+		[ -d "$BASEDIR/run" ] || mkdir -p "$BASEDIR/run"
+		;;
+	-d)
+		if [ $# -gt 1 ] && [ -e "run/$2" ];
+		then
+			rm -f "run/$2"
+			printf "%s: '%s' deactivated.\n" \
+				"$BASENAME" "$2"
+		else
+			printf "%s: No service given or service is not marked as to run.\n" \
+				"$BASENAME" >&2
+			exit 1
+		fi
+		;;
+	-k|-s)
+		doservice "$1" "$2"
+		;;
+	-l)
+		cd avail
+		ls .
+		;;
+	-r)
+		if [ $# -gt 1 ];
+		then
+			set -x
+			svc -k "$2"
+			svc -s "$2"
+		else
+			printf "%s: please give a service name.\n" \
+				"$BASENAME" >&2
+			exit 1
+		fi
+		;;
+	*)
+		usage
+		;;
+esac
+
