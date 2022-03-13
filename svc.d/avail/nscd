@@ -8,20 +8,20 @@ PID=$(pidof -o %PPID $BIN)
 
 case $1 in
 	-s)
-		if [ -z $PID ];
+		if [ -z "$PID" ];
 		then
-			rm -f "/run/$SERVICE.pid" 2>&1 >/dev/null
+			rm -f "/run/$SERVICE.pid"  > /dev/null 2>&1
 			mkdir -p /run/nscd /var/db/nscd
-			rm -f /run/nscd/* /var/db/nscd/* 2>&1 >/dev/null
+			rm -f /run/nscd/* /var/db/nscd/*  > /dev/null 2>&1
 
-			$BIN $PARAMS >/dev/null 2>&1;
+			$BIN "$PARAMS" > /dev/null 2>&1;
 		fi
 		;;
 	-k)
-		if [ -n $PID ];
+		if [ -n "$PID" ];
 		then
-			nscd -K 2>&1 >/dev/null
-			rm -f "/run/$SERVICE.pid" 2>&1 >/dev/null
+			nscd -K  > /dev/null 2>&1
+			rm -f "/run/$SERVICE.pid" > /dev/null 2>&1
 		fi
 		;;
 	*)

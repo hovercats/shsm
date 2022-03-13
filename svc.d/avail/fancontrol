@@ -4,6 +4,7 @@ set -x
 
 SERVICE="fancontrol"
 
+# shellcheck source=/dev/null
 [ -e "/bin/svc.d/default/$SERVICE" ] && . "/bin/svc.d/default/$SERVICE"
 
 BIN="/usr/sbin/$SERVICE"
@@ -14,14 +15,14 @@ case $1 in
 	-s)
 		[ -z "$PID" ] && {
 			rm /run/fancontrol.pid
-			$BIN $PARAMS
+			$BIN "$PARAMS"
 		}
 		;;
 	-k)
 		[ -n "$PID" ] && {
 			for p in $PID;
 			do
-				kill -9 $p &> /dev/null;
+				kill -9 "$p" > /dev/null 2>&1;
 			done
 		}
 		;;
