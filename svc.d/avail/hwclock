@@ -1,12 +1,13 @@
 #!/bin/sh
 
+# shellcheck source=/dev/null
 . /bin/svc.d/default/hwclock
 
 case $1 in
 	-s)
 		;;
 	-k)
-		hwclock --adjust $PARAMS
+		hwclock --adjust "$PARAMS"
 		;;
 	*)
 		echo "usage: $0 -s|-k"
