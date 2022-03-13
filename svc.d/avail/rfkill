@@ -1,17 +1,18 @@
 #!/bin/sh
 
+# shellcheck source=/dev/null
 . /bin/svc.d/default/rfkill
 
 case $1 in
 	-s)
 		for s in $BLOCK;
 		do
-			rfkill block $s
+			rfkill block "$s"
 		done
 
 		for s in $UNBLOCK
 		do
-			rfkill unblock $s
+			rfkill unblock "$s"
 		done
 		;;
 	-k)
