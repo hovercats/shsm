@@ -4,6 +4,7 @@ SERVICE="thinkfan"
 BIN="/usr/bin/thinkfan"
 PIDFILE="/var/run/thinkfan.pid"
 
+# shellcheck source=/dev/null
 [ -e "/bin/svc.d/default/$SERVICE" ] && . "/bin/svc.d/default/$SERVICE"
 
 if [ -e "$PIDFILE" ];
@@ -16,10 +17,10 @@ fi
 case $1 in
 	-s)
 		[ -e "$PIDFILE" ] && rm -f "$PIDFILE" && PID=""
-		[ -z "$PID" ] && $BIN $PARAMS >/dev/null 2>&1;
+		[ -z "$PID" ] && $BIN "$PARAMS" >/dev/null 2>&1;
 		;;
 	-k)
-		[ -n "$PID" ] && kill -HUP $PID &> /dev/null;
+		[ -n "$PID" ] && kill -HUP "$PID" > /dev/null 2>&1;
 		[ -e "$PIDFILE" ] && rm -f "$PIDFILE"
 		;;
 	*)
