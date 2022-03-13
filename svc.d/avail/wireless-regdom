@@ -1,12 +1,13 @@
 #!/bin/sh
 
+# shellcheck source=/dev/null
 . /bin/svc.d/default/wireless-regdom
 
 case $1 in
 	-s)
 		;;
 	-k)
-		iw reg set $REGDOM
+		iw reg set "$REGDOM"
 		;;
 	*)
 		echo "usage: $0 -s|-k"
