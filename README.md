@@ -6,8 +6,7 @@ The documentation is sparse due to it being in alpha stage.
 
 ## Installation
 
-	% chmod 755 /bin/svc
-	% cp -rf svc.d /bin/svc.d
+	`$ make install`
 
 ## Services
 ### Simplest case
