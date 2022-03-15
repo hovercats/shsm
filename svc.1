@@ -1,0 +1,35 @@
+.TH svc 1 svc\-0.1
+.SH NAME
+svc
+.SH SYNOPSIS
+.B svc
+.RB [\-acdkslr]
+.RB [<service>] 
+.SH DESCRIPTION
+.B svc
+is a simple service manager written in sh
+.SH OPTIONS
+.TP
+.B \-a 
+link <service> to run dir - list all active services if no service is presented
+.TP
+.B \-c
+create the basic directories of svc (configure)
+.TP
+.B \-d
+deactive <service>
+.TP
+.B \-k
+kill <service>
+if no option is presented, kill all services
+.TP
+.B \-s
+run services linked to run dir
+if no service is presented, run all present in run dir
+.TP
+.B \-l
+list all available services
+.TP
+.B \-r
+restart <service>
+.TP
