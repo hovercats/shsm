@@ -6,7 +6,7 @@ The documentation is sparse due to it being in alpha stage.
 
 ## Installation
 
-	`$ make install`
+	% make install
 
 ## Services
 ### Simplest case
