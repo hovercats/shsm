@@ -93,7 +93,10 @@ case "$1" in
 		doservice "$1" "$2"
 		;;
 	-l)
-		ls "$BASEDIR"/avail
+		for file in "$BASEDIR"/avail/*; do
+      [ -e "$file" ] || [ -L "$file" ] || continue
+      printf "%s\n" "$file"
+    done
 		;;
 	-r)
 		if [ $# -gt 1 ];
