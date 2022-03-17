@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # shellcheck source=/dev/null
-. /bin/svc.d/default/sensors
+. /etc/svc.d/default/sensors
 
 case $1 in
 	-s)

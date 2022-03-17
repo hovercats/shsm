@@ -3,7 +3,7 @@
 SERVICE="alsa"
 
 # shellcheck source=/dev/null
-[ -e "/bin/svc.d/default/$SERVICE" ] && . "/bin/svc.d/default/$SERVICE"
+[ -e "/etc/svc.d/default/$SERVICE" ] && . "/etc/svc.d/default/$SERVICE"
 
 case $1 in
 	-s)

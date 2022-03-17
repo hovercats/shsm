@@ -1,9 +1,9 @@
 #!/bin/sh
 #
 # See LICENSE file for license details.
-#
 
-BASEDIR="/bin/svc.d"
+
+BASEDIR="/etc/svc.d"
 BASENAME="$(basename "$0")"
 
 [ -d "$BASEDIR" ] || mkdir -p "$BASEDIR"

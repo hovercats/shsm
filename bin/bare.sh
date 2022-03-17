@@ -9,7 +9,7 @@ then
 fi
 
 # shellcheck source=/dev/null
-[ -e "/bin/svc.d/default/$SERVICE" ] && . "/bin/svc.d/default/$SERVICE"
+[ -e "/etc/svc.d/default/$SERVICE" ] && . "/etc/svc.d/default/$SERVICE"
 
 BIN=""
 for p in /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin;
