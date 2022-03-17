@@ -38,7 +38,7 @@ doservice() {
 
 	if [ -z "${service}" ];
 	then
-		services=$(ls -1 run)
+    services=$(for file in ./run/*; do printf "%s\n" "$file"; done)
 		for s in ${services};
 		do
 			runservice "$s" run "$cmd"
