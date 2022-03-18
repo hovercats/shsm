@@ -38,7 +38,7 @@ doservice() {
 
 	if [ -z "${service}" ];
 	then
-    services=$(for file in ./run/*; do printf "%s\n" "$file"; done)
+    services=$(for file in ./run/*; do printf "%s\n" "$file"; done | awk -F "/" '{print $NF}')
 		for s in ${services};
 		do
 			runservice "$s" run "$cmd"
