@@ -1,0 +1,26 @@
+#!/bin/sh
+
+SERVICE="mdevd"
+
+# shellcheck source=/dev/null
+[ -e "/etc/svc.d/default/$SERVICE" ] && . "/etc/svc.d/default/$SERVICE"
+
+BIN="/usr/bin/$SERVICE"
+
+PID=$(pidof -o %PPID "$BIN")
+
+case $1 in
+	-s) 
+    # Null the legacy hotplugger as the service will take over from here.
+    printf '\n' 2>/dev/null > /proc/sys/kernel/hotplug
+    exec mdevd -f /etc/mdevd.conf -O 4
+		[ -z "$PID" ] && $BIN "$PARAMS";
+		;;
+	-k)
+		[ -n "$PID" ] && kill -9 "$PID" > /dev/null 2>&1;
+		;;
+	*)
+		echo "usage: $0 -s|-k"
+		exit 1
+esac
+
