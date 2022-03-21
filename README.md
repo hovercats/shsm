@@ -34,18 +34,13 @@ This will run »somebin -a« in the $PATH using the script /etc/svc.d/bare.sh.
 This will run »somebin« with the script at /etc/svc.d/default/somebin using the
 special variable from /etc/svc.d/default/somebin.
 
-## svc(1)
+Use `examples/avail/barebone` as a refence for writing service script.
+Its also possible to just use `exec $BIN $FLAGS` in a oneliner script too, but
+`svc` would not know how to kill the program, if you were to try to
+kill it.
 
-	% svc -a	# list all links in /etc/svc.d/run (all activated services)
-	% svc -a ser	# activate service »ser« to be run on startup
-	% svc -c	# create the basic directories of svc (configure)
-	% svc -d ser	# deactivate service »ser«
-	% svc -k	# kill all services linked to /etc/svc.d/run
-	% svc -k ser	# kill the service »ser«
-	% svc -s	# run all services linked to /etc/svc.d/run
-	% svc -s ser	# run service »ser«
-	% svc -l	# list all services in /etc/svc.d/avail
-	% svc -r ser	# restart service »ser«
+### Usage
+
+See the manpage for available documentation
 
 Have fun!
-
