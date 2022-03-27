@@ -1,0 +1,16 @@
+#!/bin/sh
+
+PID=$(pidof -o %PPID "$BIN")
+
+case $1 in
+	-s)
+		[ -z "$PID" ] && iwd -d;
+		;;
+	-k)
+		[ -n "$PID" ] && kill -9 "$PID" > /dev/null 2>&1;
+		;;
+	*)
+		echo "usage: $0 -s|-k"
+		exit 1
+esac
+
