@@ -8,9 +8,6 @@ then
 	shift 1
 fi
 
-# shellcheck source=/dev/null
-[ -e "/etc/svc.d/default/$SERVICE" ] && . "/etc/svc.d/default/$SERVICE"
-
 BIN=""
 for p in /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin;
 do
@@ -26,7 +23,7 @@ PID=$(pidof -o %PPID "$BIN")
 
 case $1 in
 	-s)
-		[ -z "$PID" ] && $BIN "$PARAMS";
+		[ -z "$PID" ] && $BIN;
 		;;
 	-k)
 		[ -n "$PID" ] && kill -9 "$PID" > /dev/null 2>&1 ;
