@@ -1,10 +1,5 @@
 #!/bin/sh
 
-SERVICE="mdevd"
-
-# shellcheck source=/dev/null
-[ -e "/etc/svc.d/default/$SERVICE" ] && . "/etc/svc.d/default/$SERVICE"
-
 BIN="/usr/bin/$SERVICE"
 
 PID=$(pidof -o %PPID "$BIN")
