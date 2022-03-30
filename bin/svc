@@ -19,16 +19,6 @@ then
 	usage
 fi
 
-bare() {
-[ $# -eq 0 ] && SERVICE="$0"
-
-if [ $# -gt 0 ];
-then
-	SERVICE="$1"
-	shift 1
-fi
-}
-
 runservice() {
 	service="$1"
 	dir="$2"
@@ -36,7 +26,8 @@ runservice() {
 
 	if [ "$(stat -L -t "$dir/$service" | cut -d' ' -f 2)" -eq 0 ];
 	then
-		bare "$service" "$cmd" > /dev/null 2>&1 &
+    [ $# -eq 0 ] && service="$0" || [ $# -gt 0 ] && service="$1" && shift 1
+		"$service" "$cmd" > /dev/null 2>&1 &
 	else
 		"$dir/$service" "$cmd" > /dev/null 2>&1 &
 	fi
