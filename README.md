@@ -6,14 +6,14 @@ The documentation is sparse due to it being in alpha stage.
 
 ## Installation
 
-	% make install
+	make install
 
 ## Services
 ### Simplest case
 
-	% touch /etc/svc.d/avail/somebin
-  % $EDITOR /etc/svc.d/avail/somebin
-	% svc -s somebin
+	 touch /etc/svc.d/avail/somebin
+   \$EDITOR /etc/svc.d/avail/somebin
+	 svc -s somebin
 
 Use `examples/avail/barebone` as a refence for writing service script.
 
