@@ -68,8 +68,10 @@ case "$1" in
 			printf "%s: '%s' activated.\n" \
 				"$BASENAME" "$2"
 		else
-			cd run || exit 1
-			ls .
+			[ -d run ] || exit 1
+			for file in ./run/*; do
+        printf '%s\n' "$file"
+      done | awk -F "/" '{print $NF}'
 		fi 
 		;;	
 	-c)
