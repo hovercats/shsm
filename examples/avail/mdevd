@@ -1,18 +1,19 @@
 #!/bin/sh
 
-BIN="/usr/bin/$SERVICE"
-
-PID=$(pidof -o %PPID "$BIN")
-
 case $1 in
 	-s) 
     # Null the legacy hotplugger as the service will take over from here.
     printf '\n' 2>/dev/null > /proc/sys/kernel/hotplug
     exec mdevd -f /etc/mdevd.conf -O 4
-		[ -z "$PID" ] && $BIN "$PARAMS";
 		;;
 	-k)
-		[ -n "$PID" ] && kill -9 "$PID" > /dev/null 2>&1;
+    ps > ps_output
+    PID="$(grep mdevd ps_output | awk '{print $1}')"
+
+    for n in $PID; do
+      kill -9 $n
+    done
+    rm -rf ps_output
 		;;
 	*)
 		echo "usage: $0 -s|-k"
