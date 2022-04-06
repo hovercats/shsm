@@ -24,7 +24,7 @@ runservice() {
 	dir="$2"
 	cmd="$3"
 
-	if [ "$(stat -L -t "$dir/$service" | cut -d' ' -f 2)" -eq 0 ];
+  if [ "$(wc -c "$dir/$service" | awk '{print $1}')" -eq 0 ];
 	then
     [ $# -eq 0 ] && service="$0" || [ $# -gt 0 ] && service="$1" && shift 1
 		"$service" "$cmd" > /dev/null 2>&1 &
