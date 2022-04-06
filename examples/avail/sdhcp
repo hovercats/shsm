@@ -5,7 +5,10 @@ case $1 in
 		exec sdhcp -f wlan0 1> /dev/null
 		;;
 	-k)
-		pkill sdhcp
+		ps > out
+    PID="$(grep sdhcp out | awk '{print $1}')"
+    kill -9 $PID
+    rm -rf out
 		;;
 	*)
 		echo "usage: $0 -s|-k"
