@@ -1,13 +1,18 @@
 #!/bin/sh
 
-PID=$(pidof -o %PPID "$BIN")
-
 case $1 in
 	-s)
-		[ -z "$PID" ] && iwd -d;
+		exec iwd -d
 		;;
 	-k)
-		[ -n "$PID" ] && kill -9 "$PID" > /dev/null 2>&1;
+  ps > ps_output
+  PID="$(grep iwd ps_output | awk '{print $1}')"
+
+  for n in "$PID"; do
+    kill -9 $n
+  done
+
+  rm -r ps_output
 		;;
 	*)
 		echo "usage: $0 -s|-k"
