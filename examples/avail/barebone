@@ -1,37 +1,12 @@
 #!/bin/sh
 
-# this script just houses some info and examples on how to write a
-# service script for svc
+# Service files are ust a simple case statement with 2 options;
+# -s & -k, start/kill.
+# 
 
-# first, you can set bin name or path to bin if you wish to use this variable
-# (optional)
-#BIN="/usr/bin/$example"
-#BIN="example"
-
-# if you for whatever reason rather use a for loop instead of the above, you can
-# use something in the lines of the example below (still optional)
-# set SERVICE variable for below
-#SERVICE="$example"
-#BIN=""
-#for p in /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin;
-#do
-	#if [ -x "$p/$SERVICE" ];
-	#then
-		#BIN="$p/$SERVICE"
-		#break
-	#fi
-#done
-#[ -z "$BIN" ] && exit 1
-
-# if you want to figure out the PID(s) of the service for later you can use 
-# pidof.
-# note: pidof is not posix.
-# (this is optional aswell)
-# PID=$(pidof -o %PPID "$BIN")
-
-# for a posix way to do the above:
+# If you want the PID for later, heres and example
 killservice() {
-  # this will eventually get improved upon, but it does work on my end anyway.
+BIN=iwd
   ps > out
   PID="$(grep $BIN out | awk '{print $1}')"
   kill -9 $PID
@@ -45,23 +20,15 @@ killservice() {
   rm -rf out
 }
 
-# here is the commands that svc will run to start/stop services
 # this is more or less mandatory, if you wish to be able to start/stop the service
 case $1 in
 	-s)
-    # this may not always work, depending on the bin
-		[ -z "$PID" ] && $BIN;
-    # a simple exec command instead might work better
-    # example:
-    # exec iwd -d
+	# simplest way is to just use exec
+	exec iwd -f
 		;;
 	-k)
-    # simlarly to above, this might not always work
-		[ -n "$PID" ] && kill -9 "$PID" > /dev/null 2>&1;
-    # a simple pkill command will kill the service + any other related PIDs
-    # pkill is not posix however.
-    # example:
-    # pkill iwd
+	# if you have pkill/or dont care for posix
+    pkill iwd
 
     # or use the above function, which is posix
     killservice
