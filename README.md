@@ -15,7 +15,7 @@ The documentation is sparse due to it being in alpha stage.
 	 $EDITOR /etc/svc.d/avail/somebin
 	 svc -s somebin
 
-Use `examples/avail/barebone` as a refence for writing service script.
+Use `examples/example` as a refence for writing service script.
 
 ### Usage
 
