@@ -5,9 +5,9 @@ MANDIR=${PREFIX}/share/man
 install:
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	mkdir -p ${DESTDIR}${PREFIX}/share/man/man1
-	chmod 755 bin/svc
+	chmod 755 svc
 	chmod 655 svc.1
-	cp -f bin/svc ${DESTDIR}${PREFIX}/bin
+	cp -f svc ${DESTDIR}${PREFIX}/bin
 	cp -f svc.1 ${DESTDIR}${PREFIX}/share/man/man1
 
 uninstall:
