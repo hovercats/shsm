@@ -2,12 +2,11 @@
 #
 # See LICENSE file for license details.
 
-
 BASEDIR="/etc/svc.d"
 BASENAME="$(basename "$0")"
 
 [ -d "$BASEDIR" ] || mkdir -p "$BASEDIR"
-cd $BASEDIR || exit 1
+cd "$BASEDIR" || exit 1
 
 usage() {
 	printf "usage: %s [-acdklrs] [service]\n" "$BASENAME" >&2
@@ -24,9 +23,9 @@ runservice() {
 	dir="$2"
 	cmd="$3"
 
-  if [ "$(wc -c "$dir/$service" | awk '{print $1}')" -eq 0 ];
+	if [ "$(wc -c "$dir/$service" | awk '{print $1}')" -eq 0 ];
 	then
-    [ $# -eq 0 ] && service="$0" || [ $# -gt 0 ] && service="$1" && shift 1
+	[ $# -eq 0 ] && service="$0" || [ $# -gt 0 ] && service="$1" && shift 1
 		"$service" "$cmd" > /dev/null 2>&1 &
 	else
 		"$dir/$service" "$cmd" > /dev/null 2>&1 &
@@ -39,7 +38,7 @@ doservice() {
 
 	if [ -z "${service}" ];
 	then
-    services=$(for file in ./run/*; do printf "%s\n" "$file"; done | awk -F "/" '{print $NF}')
+	services=$(for file in ./run/*; do printf "%s\n" "$file"; done | awk -F "/" '{print $NF}')
 		for s in ${services};
 		do
 			runservice "$s" run "$cmd"
@@ -64,15 +63,15 @@ case "$1" in
 	-a)
 		if [ $# -gt 1 ] && [ -e "avail/$2" ];
 		then
-      [ -d "$BASEDIR"/run ] || mkdir -p "$BASEDIR"/run
+		[ -d "$BASEDIR"/run ] || mkdir -p "$BASEDIR"/run
 			ln -sf "../avail/$2" "run/$2"
 			printf "%s: '%s' activated.\n" \
 				"$BASENAME" "$2"
 		else
-			[ -d run ] || exit 1
+			[ -d ./run ] || exit 1
 			for file in ./run/*; do
-        printf '%s\n' "$file"
-      done | awk -F "/" '{print $NF}'
+				printf '%s\n' "$file"
+		done | awk -F "/" '{print $NF}'
 		fi 
 		;;	
 	-c)
@@ -97,9 +96,9 @@ case "$1" in
 		;;
 	-l)
 		for file in "$BASEDIR"/avail/*; do
-      [ -e "$file" ] || [ -L "$file" ] || continue
-      printf "%s\n" "$file"
-    done
+			[ -e "$file" ] || [ -L "$file" ] || continue
+			printf "%s\n" "$file"
+		done
 		;;
 	-r)
 		if [ $# -gt 1 ];
@@ -117,4 +116,3 @@ case "$1" in
 		usage
 		;;
 esac
-
