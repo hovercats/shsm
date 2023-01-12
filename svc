@@ -69,9 +69,7 @@ case "$1" in
 				"$BASENAME" "$2"
 		else
 			[ -d ./run ] || exit 1
-			for file in ./run/*; do
-				printf '%s\n' "$file"
-		done | awk -F "/" '{print $NF}'
+			find ./run -type l
 		fi 
 		;;	
 	-c)
@@ -94,10 +92,7 @@ case "$1" in
 		doservice "$1" "$2"
 		;;
 	-l)
-		for file in "$BASEDIR"/avail/*; do
-			[ -e "$file" ] || [ -L "$file" ] || continue
-			printf "%s\n" "$file"
-		done
+		find ./avail -type f
 		;;
 	-r)
 		if [ $# -gt 1 ];
