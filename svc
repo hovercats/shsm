@@ -6,7 +6,8 @@
 BASEDIR="/etc/svc.d"
 BASENAME="$(basename "$0")"
 
-[ -d "$BASEDIR" ] || echo "Error: Base directories not found. Run svc -c to create them" && exit 1
+[ -d "$BASEDIR" ] || mkdir -p "$BASEDIR"
+cd $BASEDIR || exit 1
 
 usage() {
 	printf "usage: %s [-acdklrs] [service]\n" "$BASENAME" >&2
@@ -38,7 +39,7 @@ doservice() {
 
 	if [ -z "${service}" ];
 	then
-    services=$(find "$BASEDIR"/run -type f)
+    services=$(for file in ./run/*; do printf "%s\n" "$file"; done | awk -F "/" '{print $NF}')
 		for s in ${services};
 		do
 			runservice "$s" run "$cmd"
@@ -69,17 +70,20 @@ case "$1" in
 				"$BASENAME" "$2"
 		else
 			[ -d run ] || exit 1
-			find ./run -type f
+			for file in ./run/*; do
+        printf '%s\n' "$file"
+      done | awk -F "/" '{print $NF}'
 		fi 
 		;;	
 	-c)
-		[ -d "$BASEDIR"/avail ] || mkdir -p "$BASEDIR"/avail
-		[ -d "$BASEDIR"/run ] || mkdir -p "$BASEDIR"/run
+		[ -d "$BASEDIR" ] || mkdir -p "$BASEDIR"
+		[ -d "$BASEDIR/avail" ] || mkdir -p "$BASEDIR/avail"
+		[ -d "$BASEDIR/run" ] || mkdir -p "$BASEDIR/run"
 		;;
 	-d)
 		if [ $# -gt 1 ] && [ -e "run/$2" ];
 		then
-			rm -rf "./run/$2"
+			rm -f "run/$2"
 			printf "%s: '%s' deactivated.\n" \
 				"$BASENAME" "$2"
 		else
@@ -92,7 +96,10 @@ case "$1" in
 		doservice "$1" "$2"
 		;;
 	-l)
-		find "$BASEDIR"/avail  -type f
+		for file in "$BASEDIR"/avail/*; do
+      [ -e "$file" ] || [ -L "$file" ] || continue
+      printf "%s\n" "$file"
+    done
 		;;
 	-r)
 		if [ $# -gt 1 ];
