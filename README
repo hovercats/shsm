@@ -1,0 +1,26 @@
+SVC – Service Handling
+======================
+
+A simple service manager written in shell.
+Only handles starting and stopping services, no monitoring, no logging.
+
+Installation
+------------
+
+	$ make install
+
+Creating service scripts
+------------------------
+
+	$ touch /etc/svc.d/avail/<service>
+	$ $EDITOR /etc/svc.d/avail/<service>
+	$ svc -s <service>
+
+There are some examples scripts in examples/ dir
+
+Usage
+-----
+
+See the manpage or help function for available documentation
+
+Have fun!
