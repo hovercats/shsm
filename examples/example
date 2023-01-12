@@ -1,37 +1,11 @@
 #!/bin/sh
 
-# Service files are ust a simple case statement with 2 options;
-# -s & -k, start/kill.
-# 
+# Service files are just a simple case statement with 2 options;
 
-# If you want the PID for later, heres and example
-killservice() {
-BIN=iwd
-  ps > out
-  PID="$(grep $BIN out | awk '{print $1}')"
-  kill -9 $PID
-
-  # if a service has multiple PID's, use a for loop, like this:
-  for n in $PID; do
-    kill -9 $n
-  done
-  
-  # delete this, as we no longer need it
-  rm -rf out
-}
-
-# this is more or less mandatory, if you wish to be able to start/stop the service
 case $1 in
 	-s)
-	# simplest way is to just use exec
-	exec iwd -f
 		;;
 	-k)
-	# if you have pkill/or dont care for posix
-    pkill iwd
-
-    # or use the above function, which is posix
-    killservice
 		;;
 	*)
 		echo "usage: $0 -s|-k"
