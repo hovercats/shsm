@@ -46,7 +46,7 @@ doservice() {
 				"$BASENAME" "$s" "$cmd"
 		done
 	else
-		if [ -x "avail/$service" ];
+		if [ -x "./avail/$service" ];
 		then	
 			runservice "$service" avail "$cmd"
 			printf "%s: '%s' %s.\n" \
@@ -61,10 +61,10 @@ doservice() {
 
 case "$1" in
 	-a)
-		if [ $# -gt 1 ] && [ -e "avail/$2" ];
+		if [ $# -gt 1 ] && [ -e "./avail/$2" ];
 		then
-		[ -d "$BASEDIR"/run ] || mkdir -p "$BASEDIR"/run
-			ln -sf "../avail/$2" "run/$2"
+		[ -d ./run ] || mkdir -p ./run
+			ln -sf "../avail/$2" "./run/$2"
 			printf "%s: '%s' activated.\n" \
 				"$BASENAME" "$2"
 		else
@@ -73,13 +73,13 @@ case "$1" in
 		fi 
 		;;	
 	-c)
-		[ -d "$BASEDIR/avail" ] || mkdir -p "$BASEDIR/avail"
-		[ -d "$BASEDIR/run" ] || mkdir -p "$BASEDIR/run"
+		[ -d ./avail ] || mkdir -p ./avail
+		[ -d ./run ] || mkdir -p ./run
 		;;
 	-d)
-		if [ $# -gt 1 ] && [ -e "run/$2" ];
+		if [ $# -gt 1 ] && [ -e "./run/$2" ];
 		then
-			rm -f "run/$2"
+			rm -rf "./run/$2"
 			printf "%s: '%s' deactivated.\n" \
 				"$BASENAME" "$2"
 		else
