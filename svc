@@ -38,7 +38,7 @@ doservice() {
 
 	if [ -z "${service}" ];
 	then
-	services=$(find ./run -type l)
+	services="$(find ./run -type l | awk -F "/" '{print $NF}')"
 		for s in ${services};
 		do
 			runservice "$s" run "$cmd"
