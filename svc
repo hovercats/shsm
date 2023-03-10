@@ -5,11 +5,11 @@
 BASEDIR="/etc/svc.d"
 BASENAME="$(basename "$0")"
 
-[ -d "$BASEDIR" ] || mkdir -p "$BASEDIR"
-cd "$BASEDIR" || exit 1
+[ -d "${BASEDIR}" ] || mkdir -p "${BASEDIR}"
+cd "${BASEDIR}" || exit 1
 
 usage() {
-	printf "usage: %s [-acdklrs] [service]\n" "$BASENAME" >&2
+	printf "usage: %s [-acdklrs] [service]\n" "${BASENAME}" >&2
 	exit 1
 }
 
@@ -22,11 +22,11 @@ runservice() {
 	dir="$2"
 	cmd="$3"
 
-	if [ "$(wc -c "$dir/$service" | awk '{print $1}')" -eq 0 ]; then
+	if [ "$(wc -c "${dir}/${service}" | awk '{print $1}')" -eq 0 ]; then
 	[ $# -eq 0 ] && service="$0" || [ $# -gt 0 ] && service="$1" && shift 1
-		"$service" "$cmd" > /dev/null 2>&1 &
+		"${service}" "${cmd}" > /dev/null 2>&1 &
 	else
-		"$dir/$service" "$cmd" > /dev/null 2>&1 &
+		"${dir}/${service}" "${cmd}" > /dev/null 2>&1 &
 	fi
 }
 
@@ -38,18 +38,18 @@ doservice() {
 	services="$(find ./run -type l | awk -F "/" '{print $NF}')"
 		for s in ${services};
 		do
-			runservice "$s" run "$cmd"
+			runservice "$s" run "${cmd}"
 			printf "%s: '%s' %s.\n" \
-				"$BASENAME" "$s" "$cmd"
+				"${BASENAME}" "$s" "${cmd}"
 		done
 	else
-		if [ -x "./avail/$service" ]; then	
-			runservice "$service" avail "$cmd"
+		if [ -x "./avail/${service}" ]; then
+			runservice "${service}" avail "${cmd}"
 			printf "%s: '%s' %s.\n" \
-				"$BASENAME" "$service" "$cmd"
+				"${BASENAME}" "${service}" "${cmd}"
 		else
 			printf "%s: '%s' is not available or executable.\n" \
-				"$BASENAME" "$service" >&2
+				"${BASENAME}" "${service}" >&2
 			exit 1
 		fi
 	fi
@@ -61,7 +61,7 @@ case "$1" in
 		[ -d ./run ] || mkdir -p ./run
 			ln -sf "../avail/$2" "./run/$2"
 			printf "%s: '%s' activated.\n" \
-				"$BASENAME" "$2"
+				"${BASENAME}" "$2"
 		else
 			[ -d ./run ] || exit 1
 			find ./run -type l
@@ -75,10 +75,10 @@ case "$1" in
 		if [ $# -gt 1 ] && [ -e "./run/$2" ]; then
 			rm -rf "./run/$2"
 			printf "%s: '%s' deactivated.\n" \
-				"$BASENAME" "$2"
+				"${BASENAME}" "$2"
 		else
 			printf "%s: No service given or service is not marked as to run.\n" \
-				"$BASENAME" >&2
+				"${BASENAME}" >&2
 			exit 1
 		fi
 		;;
@@ -95,7 +95,7 @@ case "$1" in
 			svc -s "$2"
 		else
 			printf "%s: please give a service name.\n" \
-				"$BASENAME" >&2
+				"${BASENAME}" >&2
 			exit 1
 		fi
 		;;
