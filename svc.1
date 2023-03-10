@@ -1,4 +1,4 @@
-.TH svc 1 svc\-0.1
+.TH svc 1
 .SH NAME
 svc
 .SH SYNOPSIS
@@ -7,26 +7,23 @@ svc
 .RB [<service>] 
 .SH DESCRIPTION
 .B svc
-is a simple service manager written in sh
+is a simple service manager written in POSIX sh
 .SH OPTIONS
 .TP
 .B \-a 
-link <service> to run dir
-list all active services if no service is presented
+activate <service> - list all active services if no service is presented
 .TP
 .B \-c
-create the basic directories of svc (configure)
+create the basic directories for svc
 .TP
 .B \-d
 deactivate <service>
 .TP
 .B \-k
-kill <service>
-if no option is presented, kill all services
+kill <service> - if no option is presented, kill all services
 .TP
 .B \-s
-run services linked to run dir
-if no service is presented, run all present in run dir
+start <service> - if no service is presented, run all actived services
 .TP
 .B \-l
 list all available services
