@@ -16,7 +16,7 @@ Creating service scripts
 	$ $EDITOR /etc/svc.d/avail/<service>
 	$ svc -s <service>
 
-There are some examples scripts in examples/ dir
+There are some example scripts in examples/ dir
 
 Usage
 -----
