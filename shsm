@@ -2,7 +2,7 @@
 #
 # See LICENSE file for license details.
 
-BASEDIR="/etc/svc.d"
+BASEDIR="/etc/shsm"
 BASENAME="$(basename "$0")"
 
 [ -d "${BASEDIR}" ] || mkdir -p "${BASEDIR}"
@@ -91,8 +91,8 @@ case "$1" in
 	-r)
 		if [ $# -gt 1 ]; then
 			set -x
-			svc -k "$2"
-			svc -s "$2"
+			shsm -k "$2"
+			shsm -s "$2"
 		else
 			printf "%s: please give a service name.\n" \
 				"${BASENAME}" >&2

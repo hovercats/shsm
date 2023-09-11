@@ -1,5 +1,5 @@
-SVC – Service Handling
-======================
+shsm
+----
 
 A simple service manager written in shell.
 Only handles starting and stopping services, no monitoring, no logging.
@@ -12,9 +12,9 @@ Installation
 Creating service scripts
 ------------------------
 
-	$ touch /etc/svc.d/avail/<service>
-	$ $EDITOR /etc/svc.d/avail/<service>
-	$ svc -s <service>
+	$ touch /etc/shsm/avail/<service>
+	$ $EDITOR /etc/shsm/avail/<service>
+	$ shsm -s <service>
 
 There are some example scripts in examples/ dir
 
