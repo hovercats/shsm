@@ -9,14 +9,10 @@ Installation
 
 	$ make install
 
-Creating service scripts
-------------------------
+Service scripts
+---------------
 
-	$ touch /etc/shsm/avail/<service>
-	$ $EDITOR /etc/shsm/avail/<service>
-	$ shsm -s <service>
-
-There are some example scripts in examples/ dir
+See template file for service script structure.
 
 Usage
 -----

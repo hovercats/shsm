@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Service files are just a simple case statement with 2 options
+
+case $1 in
+	-s)
+		# Put commands you wish to run when starting a service here
+		;;
+	-k)
+		# Put commands you wish to run when killing a service here
+		;;
+	*)
+		echo "usage: $0 -s|-k"
+		exit 1
+esac
