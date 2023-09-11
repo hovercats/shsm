@@ -13,10 +13,6 @@ usage() {
 	exit 1
 }
 
-if [ $# -lt 1 ]; then
-	usage
-fi
-
 runservice() {
 	service="$1"
 	dir="$2"
