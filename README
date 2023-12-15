@@ -12,7 +12,8 @@ Installation
 Service scripts
 ---------------
 
-See template file for service script structure.
+Service scripts are rather simple. Basically it only requires a simple case
+statement: -s/-k to start and stop. You can basically use w/e language you want.
 
 Usage
 -----
