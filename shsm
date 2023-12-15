@@ -9,8 +9,8 @@ BASENAME="$(basename "$0")"
 cd "${BASEDIR}" || exit 1
 
 usage() {
-	printf "usage: %s [-acdklrs] [service]\n" "${BASENAME}" >&2
-	exit 1
+	printf "Usage: %s [-acdklrs] [service]\n" "${BASENAME}" >&2
+	exit 0
 }
 
 runservice() {
