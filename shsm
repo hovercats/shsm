@@ -1,6 +1,6 @@
 #!/bin/sh
-#
-# See LICENSE file for license details.
+
+set -x
 
 BASEDIR="/etc/shsm"
 BASENAME="$(basename "$0")"
